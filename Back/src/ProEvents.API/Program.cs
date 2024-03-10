@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using ProEvents.API.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+// Validating and receiving the connection string
+string SqlLiteConnection =
+    builder.Configuration.GetConnectionString("Default")
+    ?? throw new Exception("A connection string was not configured correctly");
+
+builder.Services.AddDbContext<DataContext>(options =>
+                    options.UseSqlite(SqlLiteConnection));
 
 var app = builder.Build();
 
