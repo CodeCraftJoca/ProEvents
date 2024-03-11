@@ -26,7 +26,9 @@ public class EventController : ControllerBase
     [HttpGet("{id}")]
     public Event GetById(int id)
     {
+#pragma warning disable CS8603 // Possible null reference return.
         return _context.Events.FirstOrDefault(e => e.EventId == id);
+#pragma warning restore CS8603 // Possible null reference return.
     }
 
     [HttpPost]
